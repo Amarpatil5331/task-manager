@@ -5,6 +5,7 @@ import com.task.manager.dto.StatusRequest;
 import com.task.manager.service.TaskService;
 import com.task.manager.dto.TaskRequest;
 import com.task.manager.entity.Task;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody TaskRequest request){
+    public ResponseEntity<Task> createTask(@Valid  @RequestBody TaskRequest request){
         return ResponseEntity.ok(taskService.createTask(request));
     }
 
