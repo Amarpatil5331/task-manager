@@ -7,6 +7,7 @@ import com.task.manager.dto.TaskRequest;
 import com.task.manager.entity.Task;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid  @RequestBody TaskRequest request){
-        return ResponseEntity.ok(taskService.createTask(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(request));
     }
 
     @GetMapping
@@ -42,6 +43,6 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable long id){
         taskService.deleteTask(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
