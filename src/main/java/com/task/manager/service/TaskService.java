@@ -8,8 +8,10 @@ import com.task.manager.enums.TaskStatus;
 import com.task.manager.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,21 +34,18 @@ public class TaskService {
     }
 
     public Task getById(long id){
-        return taskRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("task id not found: "+id));
+        return findTaskOrThrow(id);
     }
     @Transactional
     public Task updateTask(long id, StatusRequest request){
-        Task existingTask=taskRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("task id not found: "+id));
+        Task existingTask = findTaskOrThrow(id);
         existingTask.setStatus(request.getStatus());
         return existingTask; // dirty checking
     }
 
     @Transactional
     public void deleteTask(long id){
-        Task existingTask=taskRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("task id not found: "+id));
+        Task existingTask = findTaskOrThrow(id);
         taskRepository.delete(existingTask);
     }
 
@@ -64,5 +63,11 @@ public class TaskService {
         String afterSlashes = url.substring(url.indexOf("//") + 2); // localhost:3306/test_db?...
         String hostAndPort = afterSlashes.split("/")[0];            // localhost:3306
         return hostAndPort.split(":")[0];                           // localhost
+    }
+
+    private Task findTaskOrThrow(long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Task not found: " + id));
     }
 }
