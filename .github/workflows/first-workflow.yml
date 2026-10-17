@@ -16,16 +16,8 @@ jobs:
       ENVIRONMENT: development
 
     steps:
-      - name: Step 1
-        env:
-          MESSAGE: Hello
-        run: |
-          echo "$APP_NAME"
-          echo "$ENVIRONMENT"
-          echo "$MESSAGE"
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Step 2
-        run: |
-          echo "$APP_NAME"
-          echo "$ENVIRONMENT"
-          echo "$MESSAGE"
+      - name: Show current directory
+        run: pwd
