@@ -6,16 +6,16 @@ on:
       - 'feature/**'
       - dev
 
+env:
+  APP_NAME: task-manager
+
 jobs:
   first-job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Step 1
-        run: echo "Step 1 is running"
+      - name: Print application name
+        run: echo "Application name is $APP_NAME"
 
-      - name: Step 2
-        run: exit 1
-
-      - name: Step 3
-        run: echo "Step 3 is running"
+      - name: Print another message
+        run: echo "Learning GitHub Actions"
