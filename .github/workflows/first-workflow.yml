@@ -12,10 +12,20 @@ env:
 jobs:
   first-job:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: development
 
     steps:
-      - name: Print application name
-        run: echo "Application name is $APP_NAME"
+      - name: Step 1
+        env:
+          MESSAGE: Hello
+        run: |
+          echo "$APP_NAME"
+          echo "$ENVIRONMENT"
+          echo "$MESSAGE"
 
-      - name: Print another message
-        run: echo "Learning GitHub Actions"
+      - name: Step 2
+        run: |
+          echo "$APP_NAME"
+          echo "$ENVIRONMENT"
+          echo "$MESSAGE"
