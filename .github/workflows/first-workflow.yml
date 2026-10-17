@@ -1,0 +1,19 @@
+
+name: My First Workflow
+
+on:
+  push:
+    branches:
+      - feature/**
+      - dev
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print first message
+        run: echo "Hello from GitHub Actions"
+
+      - name: Print second message
+        run: echo "My first workflow is running successfully"
